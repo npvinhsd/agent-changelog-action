@@ -70,8 +70,8 @@ async function run() {
       }
 
       core.info(`Commit result: ${stdout}|${stderr}`);
-
-      exec(`git push`, (error, stdout, stderr) => {
+      let remoteRepo = `https://${GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
+      exec(`git push ${remoteRepo}`, (error, stdout, stderr) => {
         if (error) {
           core.setFailed(`Error when push: ${error.message}`);
           return;
