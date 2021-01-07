@@ -70,7 +70,7 @@ async function run() {
     fs.appendFileSync('docs/PreRelease.md', latestRelease.body);
 
     // Push changed to center repo
-    exec(`git add .; git commit -m "bump ${REPOSITORY} to ${latestRelease.tag}"`, (error, stdout, stderr) => {
+    exec(`git config --local user.email "bot.noreply@verichains.io";git config --local user.name "[bot]";git add .; git commit -m "bump ${REPOSITORY} to ${latestRelease.tag}"`, (error, stdout, stderr) => {
       if (error) {
         core.setFailed(`Error when commit: ${error.message}`);
         return;
