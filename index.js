@@ -21,7 +21,7 @@ async function getLatestRelease() {
     let tag = latestRelease.data.tag_name;
 
     body = body.replace('#', '##');
-    body = `# ${REPOSITORY} ${tag}\n` + body;
+    body = `# ${REPOSITORY} ${tag}\n` + body + '\n';
 
     return {
       tag: latestRelease.data.tag_name,
