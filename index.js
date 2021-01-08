@@ -20,7 +20,7 @@ async function getLatestRelease() {
     let body = latestRelease.data.body;
     let tag = latestRelease.data.tag_name;
 
-    body = body.replace('#', '##');
+    body = body.replace(/(#+)/g, '$1#');
     body = `# ${REPOSITORY} ${tag}\n` + body + '\n';
 
     return {
@@ -56,6 +56,11 @@ async function run() {
 
     // Update version in polaris-centre
     const moduleJson = await getJsonModule();
+    if (moduleJson[REPOSITORY] === latestRelease.tag) {
+      core.info('Same tag --- stop here');
+      return;
+    }
+
     moduleJson[REPOSITORY] = latestRelease.tag;
     writeModuleFile(moduleJson);
 
